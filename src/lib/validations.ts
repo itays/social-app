@@ -5,7 +5,7 @@ const requiredString = z.string().trim().min(1, "Required");
 export const signupScheme = z.object({
   email: requiredString.email("Invalid email address"),
   username: requiredString.regex(
-    /^[a-zA-Z0-9_-]$/,
+    /^[a-zA-Z0-9_-]+$/,
     "Only alphanumeric characters and underscores are allowed",
   ),
   password: requiredString.min(
