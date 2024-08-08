@@ -24,7 +24,7 @@ export default function SignupForm() {
   const [error, setError] = useState("");
   const form = useForm<SignupValues>({
     resolver: zodResolver(signupScheme),
-    mode: "onBlur",
+    mode: "all",
     defaultValues: {
       username: "",
       email: "",
