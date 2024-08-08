@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Inter, Roboto_Mono } from "next/font/google";
-
+import { ThemeProvider } from "next-themes";
 const inter = Inter({
   subsets: ["latin"],
   display: "swap",
@@ -30,7 +30,14 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} ${roboto_mono.variable}`}>
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

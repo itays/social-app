@@ -8,17 +8,23 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSubTrigger,
+  DropdownMenuSub,
+  DropdownMenuPortal,
+  DropdownMenuSubContent,
 } from "./ui/dropdown-menu";
 import UserAvatar from "./UserAvatar";
 
 import Link from "next/link";
-import { LogOut, UserIcon } from "lucide-react";
+import { Check, LogOut, Monitor, Moon, Sun, UserIcon } from "lucide-react";
 import { logoutAction } from "@/app/(auth)/actions";
 import { ComponentProps } from "react";
 import { cn } from "@/lib/utils";
+import { useTheme } from "next-themes";
 
 export default function UserButton({ className }: ComponentProps<"button">) {
   const { user } = useSession();
+  const { theme, setTheme } = useTheme();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -35,6 +41,31 @@ export default function UserButton({ className }: ComponentProps<"button">) {
             Profile
           </DropdownMenuItem>
         </Link>
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger>
+            <Monitor className="mr-2 size-4" />
+            Theme
+          </DropdownMenuSubTrigger>
+          <DropdownMenuPortal>
+            <DropdownMenuSubContent>
+              <DropdownMenuItem onClick={() => setTheme("system")}>
+                <Monitor className="mr-2 size-4" />
+                System default
+                {theme === "system" && <Check className="ms-2 size-4" />}
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme("light")}>
+                <Sun className="mr-2 size-4" />
+                Light
+                {theme === "light" && <Check className="ms-2 size-4" />}
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme("dark")}>
+                <Moon className="mr-2 size-4" />
+                Dark
+                {theme === "dark" && <Check className="ms-2 size-4" />}
+              </DropdownMenuItem>
+            </DropdownMenuSubContent>
+          </DropdownMenuPortal>
+        </DropdownMenuSub>
         <DropdownMenuSeparator />
         <DropdownMenuItem
           onClick={() => {
