@@ -1,5 +1,6 @@
 import { validateRequest } from "@/auth";
 import { redirect } from "next/navigation";
+import SessionProvider from "./SessionProvider";
 
 export default async function AuthLayout({
   children,
@@ -10,5 +11,5 @@ export default async function AuthLayout({
   if (!session.user) {
     redirect("/login");
   }
-  return <>{children}</>;
+  return <SessionProvider value={session}>{children}</SessionProvider>;
 }
