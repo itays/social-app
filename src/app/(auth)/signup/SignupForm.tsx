@@ -40,7 +40,6 @@ export default function SignupForm() {
         setError(error);
       }
     });
-    debugger;
   }
 
   return (

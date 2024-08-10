@@ -21,3 +21,11 @@ export function formatRelativeDate(from: Date) {
     }
   }
 }
+
+export function formatNumber(number: number): string {
+  // Intl is a default javascript object that provides localization and formatting capabilities
+  return Intl.NumberFormat("en-US", {
+    notation: "compact", // compact notation (e.g. 1.2k, 1.2M, 1.2B)
+    maximumFractionDigits: 1, // maximum number of digits after the decimal point
+  }).format(number);
+}
