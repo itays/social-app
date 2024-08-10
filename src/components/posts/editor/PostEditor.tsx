@@ -8,9 +8,12 @@ import UserAvatar from "@/components/UserAvatar";
 import { useSession } from "@/app/(main)/SessionProvider";
 import { Button } from "@/components/ui/button";
 import "./editorStyles.css";
+import { useIsMounted } from "@/components/hooks/useIsMounted";
 
 export default function PostEditor() {
   const { user } = useSession();
+  const isMounted = useIsMounted();
+
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -21,6 +24,7 @@ export default function PostEditor() {
         placeholder: "Write something …",
       }),
     ],
+    immediatelyRender: false,
   });
   const input =
     editor?.getText({
@@ -36,10 +40,12 @@ export default function PostEditor() {
     <div className="flex flex-col gap-5 rounded-2xl bg-card p-5 shadow">
       <div className="flex gap-5">
         <UserAvatar avaterUrl={user.avatarUrl} className="hidden sm:inline" />
-        <EditorContent
-          editor={editor}
-          className="max-h-[20rem] w-full overflow-y-auto rounded-2xl bg-gray-100 px-5 py-3 dark:bg-gray-900"
-        />
+        {isMounted && (
+          <EditorContent
+            editor={editor}
+            className="max-h-[20rem] w-full overflow-y-auto rounded-2xl bg-gray-100 px-5 py-3 dark:bg-gray-900"
+          />
+        )}
       </div>
       <div className="flex justify-end">
         <Button
