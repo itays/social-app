@@ -1,22 +1,15 @@
 "use client";
 
 import Post from "@/components/posts/Post";
+import kyInstance from "@/lib/ky";
 import { PostData } from "@/lib/types";
 import { useQuery } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 
 export default function ForYouFeed() {
   const { isPending, isError, data } = useQuery<PostData[]>({
-    queryKey: ["posy-feed", "for-you"],
-    queryFn: async () => {
-      const res = await fetch("/api/posts/for-you");
-      if (!res.ok) {
-        throw new Error(
-          `Failed to fetch posts with status code: ${res.status}`,
-        );
-      }
-      return res.json();
-    },
+    queryKey: ["post-feed", "for-you"],
+    queryFn: kyInstance.get("/api/posts/for-you").json<PostData[]>,
   });
 
   if (isPending) {
