@@ -21,10 +21,12 @@ import { logoutAction } from "@/app/(auth)/actions";
 import { ComponentProps } from "react";
 import { cn } from "@/lib/utils";
 import { useTheme } from "next-themes";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function UserButton({ className }: ComponentProps<"button">) {
   const { user } = useSession();
   const { theme, setTheme } = useTheme();
+  const queryClient = useQueryClient();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -69,6 +71,8 @@ export default function UserButton({ className }: ComponentProps<"button">) {
         <DropdownMenuSeparator />
         <DropdownMenuItem
           onClick={() => {
+            // this will clear the cache and make sure that the next user doesn't see the stale data of the previous user
+            queryClient.clear();
             logoutAction();
           }}
         >
