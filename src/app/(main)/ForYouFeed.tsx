@@ -2,6 +2,7 @@
 
 import InfiniteScrollContainer from "@/components/InfiniteScrollContainer";
 import Post from "@/components/posts/Post";
+import PostsLoadingSkeleton from "@/components/posts/PostsLoadingSkeleton";
 import { Button } from "@/components/ui/button";
 import kyInstance from "@/lib/ky";
 import { PostPage } from "@/lib/types";
@@ -13,6 +14,7 @@ export default function ForYouFeed() {
     isPending,
     isError,
     data,
+    isSuccess,
     fetchNextPage,
     hasNextPage,
     isFetching,
@@ -34,7 +36,7 @@ export default function ForYouFeed() {
   const posts = data?.pages.flatMap((page) => page.posts) || [];
 
   if (isPending) {
-    return <Loader2 className="mx-auto animate-spin" />;
+    return <PostsLoadingSkeleton />;
   }
 
   if (isError) {
@@ -43,6 +45,10 @@ export default function ForYouFeed() {
         An error occurred while loading the feed
       </p>
     );
+  }
+
+  if (!posts.length && isSuccess && !hasNextPage) {
+    return <p className="text-center text-muted-foreground">No posts found</p>;
   }
 
   return (
