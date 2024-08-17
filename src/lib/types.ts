@@ -21,3 +21,8 @@ export type PostPage = {
   posts: PostData[];
   nextCursor: string | null;
 };
+
+export type FollowerInfo = {
+  followers: number;
+  isFollowing: boolean;
+};
