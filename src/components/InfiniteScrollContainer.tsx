@@ -20,8 +20,8 @@ export default function InfiniteScrollContainer({
     },
   });
   return (
-    <div className={className}>
-      {/* children will be the posts or some otehr content */}
+    <div className={className} data-testid="InfiniteScrollContainer">
+      {/* children will be the posts or some other content */}
       {children}
       {/* this is the div that will be used to detect when the ref is in view, when it is in view it will trigger the onChange function */}
       <div ref={ref}></div>
