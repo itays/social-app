@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
   try {
     // get the cursor from the url we send frok the client. the cursor is the id of the last post we fetched
     const cursor = req.nextUrl.searchParams.get("cursor") || undefined;
-    const pageSize = 1;
+    const pageSize = 2;
     const { user } = await validateRequest();
 
     if (!user) {
@@ -18,9 +18,6 @@ export async function GET(req: NextRequest) {
     }
 
     const posts = await prisma.post.findMany({
-      // where: {
-      //   userId: user.id,
-      // },
       include: postDataInclude,
       orderBy: {
         createdAt: "desc",
