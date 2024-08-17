@@ -27,6 +27,8 @@ model User {
   sessios      Session[]
   createdAt    DateTime  @default(now())
   posts        Post[]
+  following    Follow[]  @relation("Following") // the users that the current user is following
+  followers    Follow[]  @relation("Followers") // the users that are following the current user
 
   @@map("users")
 }
@@ -38,6 +40,20 @@ model Session {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("sessions")
+}
+
+model Follow {
+  // the id of the user that makes the follow request 
+  followerId String
+  follower   User   @relation("Following", fields: [followerId], references: [id], onDelete: Cascade)
+
+  // the id of the user that is being followed
+  followingId String
+  following   User   @relation("Followers", fields: [followingId], references: [id], onDelete: Cascade)
+
+  // this will make sure that a user can only follow a user once, there can be only 1 combimation of follower and following
+  @@unique([followerId, followingId])
+  @@map("follows")
 }
 
 model Post {
