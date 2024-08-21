@@ -2,7 +2,7 @@
 
 import { validateRequest } from "@/auth";
 import prisma from "@/lib/prisma";
-import { postDataInclude } from "@/lib/types";
+import { getPostDataInclude } from "@/lib/types";
 import { createPostSchema } from "@/lib/validations";
 
 export async function submitPostAction(input: string) {
@@ -20,7 +20,7 @@ export async function submitPostAction(input: string) {
       userId: user.id,
     },
     //
-    include: postDataInclude,
+    include: getPostDataInclude(user.id),
   });
   return newPost;
 }
